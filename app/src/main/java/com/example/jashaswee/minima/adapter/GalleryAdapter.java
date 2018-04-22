@@ -1,8 +1,8 @@
 package com.example.jashaswee.minima.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,12 +13,15 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.jashaswee.minima.R;
+import com.example.jashaswee.minima.model.Image;
 
 import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
     private List<Image> images;
     private Context mContext;
+
+    private static final String TAG = GalleryAdapter.class.getSimpleName();
 
     public GalleryAdapter(Context context, List<Image> images) {
         mContext = context;
@@ -40,7 +43,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         Image image = images.get(position);
 
 
-        Glide.with(mContext).load(new com.example.jashaswee.minima.model.Image().getMedium())
+        Glide.with(mContext).load(image.getMedium())
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -49,7 +52,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return 0;
+        Log.d(TAG, "getItemCount: " + images.size());
+        return images.size();
     }
 
     public interface ClickListener {
